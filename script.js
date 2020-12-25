@@ -1,64 +1,115 @@
-let billAmt = document.querySelector("#bill")
-let cashAmt = document.querySelector("#cash")
-let btn = document.querySelector("#btn")
-let bal = document.querySelector("#bal")
-let displayMsg = document.querySelector("#disp")
+let billAmt = document.querySelector("#bill");
+let cashAmt = document.querySelector("#cash");
+let btn = document.querySelector("#btn");
+let clr = document.querySelector("#clr");
+let bal = document.querySelector("#bal");
+let err = document.querySelector("#err");
+let displayMsg = document.querySelector("#disp");
+let displayBoard = document.querySelector(".displayboard");
 
-btn.addEventListener("click", function(){
-    let bill = billAmt.value;
-    let cash = cashAmt.value;
-    let balance = cash - bill;
+billAmt.addEventListener("input", function(){
+    if(isNaN(billAmt.value)){
+        err.style.display = "block";
+        err.textContent = "Bill Amount should be only Number"
+    } else {
+        if(billAmt.value > 0){
+            err.style.display = "none";
+            cashAmt.style.display = "initial";
+        } else{
+            err.style.display = "block";
+            cashAmt.style.display = "none";
+            if(billAmt.value === "") {
+                err.textContent = "Bill Amount cannot be Empty"
+            } else if(billAmt.value < 0) {
+                err.textContent = "Bill Amount cannot be Negative"
+            }
+        } 
+    }
+})
+
+cashAmt.addEventListener("input", function(){
+    if(isNaN(cashAmt.value)){
+        err.style.display = "block";
+        err.textContent = "Cash Amount should be only Number"
+    } else {
+        if(cashAmt.value > 0){
+            if((Number(cashAmt.value) >= Number(billAmt.value))){
+                err.style.display = "none";
+                btn.style.display = "block";
+            } else {
+                err.style.display = "block";
+                btn.style.display = "none";
+                err.textContent = "Bill cannot be more than Cash received"
+            }
+        } else {
+            err.style.display = "block";
+            btn.style.display = "none";
+            if(cashAmt.value === "") {
+                err.textContent = "Cash Amount cannot be Empty"
+            } else if(cashAmt.value < 0) {
+                err.textContent = "Cash Amount cannot be Negative"
+            } 
+        } 
+    }
+})
+
+btn.addEventListener("click", calculate);
+
+function calculate() {
+    let balance = cashAmt.value - billAmt.value;
     let tempBalance = balance;
-    let notes2000, notes500, notes100, notes50, notes20, notes10, notes5, change2; 
-    if(tempBalance >= 2000){
-        notes2000 = Math.floor(tempBalance / 2000);
-        tempBalance = tempBalance - (2000 * notes2000)
+    let notesValueArray = [2000, 500, 100, 50, 20, 10, 5, 2, 1];
+    let notesNumberArray = []; 
+    notesValueArray.forEach((e) => {
+        if(tempBalance >= e){
+            notesNumberArray.push(Math.floor(tempBalance / e));
+            tempBalance = tempBalance - (e * notesNumberArray[notesNumberArray.length - 1]);
+        } else {
+            notesNumberArray.push(0);
+        }
+    })
+    if(Number(cashAmt.value) === Number(billAmt.value)){
+        bal.style.display = "block";
+        bal.textContent = `Balance : 0`
+        displayMsg.style.display = "block";
+        displayMsg.textContent = `Cash and Bill are equal, nothing to return`
     } else {
-        notes2000 = 0;
+        display(notesValueArray, notesNumberArray, balance);
     }
-    if(tempBalance >= 500){
-        notes500 = Math.floor(tempBalance / 500);
-        tempBalance = tempBalance - (500 * notes500);
-    } else {
-        notes500 = 0;
-    }
-    if(tempBalance >= 100){
-        notes100 = Math.floor(tempBalance / 100);
-        tempBalance = tempBalance - (100 * notes100);
-    } else {
-        notes100 = 0;
-    }
-    if(tempBalance >= 50){
-        notes50 = Math.floor(tempBalance / 50);
-        tempBalance = tempBalance - (50 * notes50);
-    } else {
-        notes50 = 0;
-    }
-    if(tempBalance >= 20){
-        notes20 = Math.floor(tempBalance / 20);
-        tempBalance = tempBalance - (20 * notes20);
-    } else {
-        notes20 = 0;
-    }
-    if(tempBalance >= 10){
-        notes10 = Math.floor(tempBalance / 10);
-        tempBalance = tempBalance - (10 * notes10);
-    } else {
-        notes10 = 0;
-    }
-    if(tempBalance >= 5){
-        notes5 = Math.floor(tempBalance / 5);
-        tempBalance = tempBalance - (5 * notes5);
-    } else {
-        notes5 = 0;
-    }
-    if(tempBalance >= 2){
-        change2 = Math.floor(tempBalance / 2);
-        tempBalance = tempBalance - (2 * change2);
-    } else {
-        change2 = 0;
-    }
+    disableInputs();
+}
 
-    bal.textContent = bal.textContent + " " + balance;
-    displayMsg.textContent = displayMsg.textContent + ` 2000 x ${notes2000}, 500 x ${notes500}, 100 x ${notes100}, 50 x ${notes50}, 20 x ${notes20}, 10 x ${notes10}, 5 x ${notes5}, 2 x ${change2},  1 x ${tempBalance} `
+function display(notesValueArray, notesNumberArray, balance){
+    bal.style.display = "block";
+    bal.textContent = `Balance : ${balance}`
+    displayMsg.style.display = "block";
+    displayMsg.textContent = `Return cash in following denominations :`
+    notesValueArray.forEach((e, index) => {
+        displayBoard.innerHTML = displayBoard.innerHTML + 
+                                `<div class="notes">
+                                    <h1 class="note">${e}</h1>
+                                    <h2 class="number">${notesNumberArray[index]}</h2>
+                                </div>`
+    })
+}
+
+function disableInputs() {
+    billAmt.disabled = true;
+    cashAmt.disabled = true;
+    btn.disabled = true;
+    clr.style.display = "initial"
+}
+
+clr.addEventListener("click", function() {
+    billAmt.disabled = false;
+    billAmt.value = ""
+    cashAmt.disabled = false;
+    cashAmt.value = ""
+    btn.disabled = false;
+    clr.style.display = "none";
+    displayBoard.innerHTML = "";
+    displayMsg.style.display = "none";
+    bal.style.display = "none";
+    btn.style.display = "none";
+    cashAmt.style.display = "none";
 })

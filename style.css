@@ -5,4 +5,125 @@
     font-family: "Montserrat";
     text-align: center;
 }
+body{
+    background-color: #9aecdc6b;
+}
 
+.content{
+    background-color: #55e6c267;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    border-radius: 0.5rem;
+    min-height: 80vh;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 1rem;
+}
+
+#bill, #cash{
+    width: 70%;
+    padding: 0.7rem 0.5rem;
+    display: block;
+    margin: auto;
+    border-radius: 0.2rem;
+    outline: none;
+    border: 2px solid #58B19F;
+    margin-top: 1rem;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+#cash{
+    display: none;
+}
+
+.button{
+    display: block;
+    margin: auto;
+    padding: 0.5rem 1rem;
+    background-color:#fff;
+    color: #000;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 2px solid #000;
+    cursor: pointer;
+    margin-top: 1.3rem;
+    display: none;
+}
+
+
+#disp, #bal, #err {
+    margin-top: 1rem;
+    display: none;
+}
+
+#err{
+    color: #ff4757;
+}
+
+.displayboard{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.notes{
+    width: 150px;
+    min-height: 80px;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 1rem;
+    background-color: #f2f2f2;
+}
+
+.note, .number{
+    width: 70%;
+    padding: 0.5rem;
+    margin: 0 auto;
+    padding: 1px solid black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.number{
+    background-color: #fff;
+    font-weight: 600;
+}
+
+.notes:nth-child(1) .note{
+    background-color: #ff9ff3;
+}
+
+.notes:nth-child(2) .note{
+    background-color: #55E6C1;
+}
+
+.notes:nth-child(3) .note{
+    background-color: #9980FA;
+}
+
+.notes:nth-child(4) .note{
+    background-color: #17c0eb;
+}
+
+.notes:nth-child(5) .note{
+    background-color: #ea8685;
+}
+
+.notes:nth-child(6) .note{
+    background-color: #ccae62;
+}
+
+.notes:nth-child(7) .note{
+    background-color: #f7d794;
+}
+
+.notes:nth-child(8) .note{
+    background-color: #d1d8e0;
+}
+
+.notes:nth-child(9) .note{
+    background-color: #a5b1c2;
+}

@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Cash Register</h1><br>
-    <input type="text" id="bill" placeholder="Bill Amount"> <br><br>
-    <input type="text" id="cash" placeholder="Cash Amount"> <br><br>
-    <button id="btn">Calculate</button><br><br>
-    <h4 id="bal">Balance: </h4> <br>
-    <h3 id="disp">Return cash in : </h3>
-    <script src="script.js"></script>
+    <section class="content">
+        <h1>💰Cash Register🤑</h1>
+        <input type="text" id="bill" placeholder="Enter Bill Amount" autocomplete="off">
+        <input type="text" id="cash" placeholder="Received Cash Amount" autocomplete="off"> 
+        <button id="btn" class="button">Calculate 💻</button>
+        <button id="clr" class="button">Clear </button>
+        <h2 id="bal"></h2> 
+        <h3 id="disp"></h3>
+        <h3 id="err"></h3>
+        <div class="displayboard"></div>
+        <script src="script.js"></script>
+    </section>
 </body>
 </html>
